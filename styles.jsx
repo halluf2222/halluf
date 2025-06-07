@@ -1,0 +1,78 @@
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    position: 'absolute',
+    top: 0,
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    marginTop: 180,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 40,
+    color: '#333',
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 16,
+    marginBottom: 20,
+    color: '#000',
+  },
+  button: {
+    backgroundColor: '#878AF6',
+    borderRadius: 24,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  footerText: {
+    marginTop: 24,
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#666',
+  },
+  link: {
+    color: '#878AF6',
+    fontWeight: '500',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 24,
+    elevation: 10,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+});

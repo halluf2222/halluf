@@ -1,197 +1,188 @@
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet } from 'react-native';
-import { Svg, Rect } from 'react-native-svg';
-import { TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  Modal,
+} from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+
+const { width } = Dimensions.get('window');
 
 export default function Login({ navigation }) {
+  const [showRegister, setShowRegister] = useState(false);
+  const [nome, setNome] = useState('');
+  const [emailCadastro, setEmailCadastro] = useState('');
+  const [senhaCadastro, setSenhaCadastro] = useState('');
+  const [emailLogin, setEmailLogin] = useState('');
+  const [senhaLogin, setSenhaLogin] = useState('');
+
+  const handleCadastro = () => {
+    setShowRegister(false);
+    navigation.navigate('Home', { nome });
+  };
+
+  const handleLogin = () => {
+    navigation.navigate('Home', { nome: nome || 'Usuário' });
+  };
+
   return (
-    <View style={styles.loginContainer}>
-      <Text style={styles.bemvindodevolta}>
-        {`Bem vindo de volta!`}
-      </Text>
-      <Text style={styles.nãotemcontaCrieagora}>
-        {`Não tem conta?`}<Text style={{"textAlign":"left","color":"rgba(135, 138, 246, 1)","fontFamily":"Inter","fontSize":12,"fontWeight":400}}>{`Crie agora!`}</Text>
-      </Text>
-      <Text style={styles.eNDEREÇOEMAIL}>
-        {`ENDEREÇO E-MAIL`}
-      </Text>
-      <Text style={styles.sENHA}>
-        {`SENHA`}
-      </Text>
-        <View style={styles.rectangle4}/>
-        <ImageBackground style={styles.checkmark11} source={{ uri: /* dummy image */ 'https://th.bing.com/th/id/OIP.OodQ6JyT_QAUgNZYrYblEQHaHa?rs=1&pid=ImgDetMainhttps://dummyimage.com/50x50/000/fff.png' }}/>
-      <Svg style={styles.group4} width="300" height="30" viewBox="0 0 300 30" fill="none" >
-<Rect x="0.5" y="0.5" width="299" height="29" rx="14.5" fill="#F1F7FA" stroke="#D7D8D7"/>
-</Svg>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Svg height="120" width={width} viewBox="0 0 1440 320">
+          <Path
+            fill="#878AF6"
+            d="M0,96L48,106.7C96,117,192,139,288,154.7C384,171,480,181,576,176C672,171,768,149,864,133.3C960,117,1056,107,1152,101.3C1248,96,1344,96,1392,96L1440,96V0H1392C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0H0Z"
+          />
+        </Svg>
+      </View>
 
-      <Svg style={styles.group9} width="300" height="30" viewBox="0 0 300 30" fill="none" >
-<Rect x="0.5" y="0.5" width="299" height="29" rx="14.5" fill="#F1F7FA" stroke="#D7D8D7"/>
-</Svg>
+      <View style={styles.form}>
+        <Text style={styles.title}>Bem vindo de volta!</Text>
 
-      <Svg style={styles.group10} width="300" height="30" viewBox="0 0 300 30" fill="none" >
-<Rect x="0.5" y="0.5" width="299" height="29" rx="14.5" fill="#F1F7FA" stroke="#D7D8D7"/>
-</Svg>
+        <TextInput
+          placeholder="E-mail"
+          placeholderTextColor="#888"
+          value={emailLogin}
+          onChangeText={setEmailLogin}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Senha"
+          placeholderTextColor="#888"
+          secureTextEntry
+          value={senhaLogin}
+          onChangeText={setSenhaLogin}
+          style={styles.input}
+        />
 
-      <Svg style={styles.group5} width="300" height="30" viewBox="0 0 300 30" fill="none" >
-<Rect x="0.5" y="0.5" width="299" height="29" rx="14.5" fill="#F1F7FA" stroke="#D7D8D7"/>
-</Svg>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
 
-     <TouchableOpacity style={styles.rectangle7} onPress={() => navigation.navigate('Home')}>
-  <Text style={styles.entrar}>Entrar</Text>
-</TouchableOpacity>
-    </View>  )
+        <Text style={styles.footerText}>
+          Não tem conta?
+          <Text style={styles.link} onPress={() => setShowRegister(true)}>
+            {' '}Crie agora!
+          </Text>
+        </Text>
+      </View>
+
+      {/* Modal de Cadastro */}
+      <Modal visible={showRegister} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Cadastro</Text>
+
+            <TextInput
+              placeholder="Nome"
+              placeholderTextColor="#888"
+              style={styles.input}
+              value={nome}
+              onChangeText={setNome}
+            />
+            <TextInput
+              placeholder="E-mail"
+              placeholderTextColor="#888"
+              style={styles.input}
+              value={emailCadastro}
+              onChangeText={setEmailCadastro}
+            />
+            <TextInput
+              placeholder="Senha"
+              placeholderTextColor="#888"
+              secureTextEntry
+              style={styles.input}
+              value={senhaCadastro}
+              onChangeText={setSenhaCadastro}
+            />
+
+            <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+              <Text style={styles.buttonText}>Cadastrar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setShowRegister(false)}>
+              <Text style={[styles.link, { marginTop: 16 }]}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  
-  loginContainer: {
-    position: "relative",
-    flexShrink: 0,
-    height: 667,
-    width: 375,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    rowGap: 0
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  bemvindodevolta: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 215,
-    left: 101,
-    width: 173,
-    height: 22,
-    textAlign: "left",
-    color: "rgba(0, 0, 0, 1)",
-    fontFamily: "Inter",
-    fontSize: 18,
-    fontWeight: 700
+  header: {
+    position: 'absolute',
+    top: 0,
   },
-  nãotemcontaCrieagora: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 626,
-    left: 111,
-    width: 152,
-    height: 15,
-    textAlign: "left",
-    color: "rgba(128, 128, 128, 1)",
-    fontFamily: "Inter",
-    fontSize: 12,
-    fontWeight: 400
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    marginTop: 120,
   },
-  eNDEREÇOEMAIL: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 284,
-    left: 40,
-    width: 111,
-    height: 15,
-    textAlign: "left",
-    color: "rgba(128, 128, 128, 1)",
-    fontFamily: "Inter",
-    fontSize: 12,
-    fontWeight: 600
+  title: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 40,
+    color: '#000',
+    textAlign: 'center',
+    fontFamily: 'Inter',
   },
-  sENHA: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 350,
-    left: 40,
-    width: 43,
-    height: 15,
-    textAlign: "left",
-    color: "rgba(128, 128, 128, 1)",
-    fontFamily: "Inter",
-    fontSize: 12,
-    fontWeight: 600
-  },
-  logo: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 100,
-    height: 80,
-    left: 147,
-    width: 80
-  },
-  rectangle4: {
-    position: "absolute",
-    flexShrink: 0,
-    width: 80,
-    height: 80,
-    backgroundColor: "rgb(255, 255, 255)",
-    borderRadius: 10
-  },
-  checkmark11: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 15,
-    left: 15,
-    width: 50,
-    height: 50
-  },
-  group4: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 303,
-    height: 30,
-    left: 37,
-    width: 300
-  },
-  group9: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 303,
-    height: 30,
-    left: 37,
-    width: 300
-  },
-  group10: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 303,
-    height: 30,
-    left: 37,
-    width: 300
-  },
-  group5: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 368,
-    height: 30,
-    left: 37,
-    width: 300
-  },
-  
-  entrar: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 448,
-    left: 166,
-    width: 58,
-    height: 23,
-    textAlign: "center",
-    color: "rgb(255, 255, 255)",
-    fontFamily: "Inter",
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
     fontSize: 16,
-    fontWeight: 700
+    paddingVertical: 10,
+    marginBottom: 30,
+    fontFamily: 'Inter',
   },
-   rectangle7: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 438,
-    left: 95,
-    width: 200,
-    height: 40,
-    backgroundColor: "rgba(135, 138, 246, 1)",
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    shadowOffset: {
-        width: 0,
-        height: 4
-      },
-    shadowRadius: 4,
-    borderRadius: 40
-   }
-  
+  button: {
+    backgroundColor: '#878AF6',
+    borderRadius: 24,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: 'Inter',
+  },
+  footerText: {
+    marginTop: 24,
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#666',
+    fontFamily: 'Inter',
+  },
+  link: {
+    color: '#878AF6',
+    fontWeight: '500',
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 24,
+    elevation: 5,
+  },
 });
